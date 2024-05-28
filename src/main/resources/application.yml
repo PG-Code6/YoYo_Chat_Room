@@ -1,0 +1,18 @@
+server:
+  port: 9091
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${ip}:3306/growth_record
+    username: root
+    password: 123456
+#  mvc:
+#    static-path-pattern: /**
+
+ip: localhost
+
+
+mybatis:
+  typeAliasesPackage: com.pg_code.domain
+  mapperLocations: classpath:mappers/*.xml
