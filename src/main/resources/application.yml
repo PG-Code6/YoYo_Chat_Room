@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${ip}:3306/growth_record
+    url: jdbc:mysql://${ip}:3306/yoyo_chat_room
     username: root
     password: 123456
 
