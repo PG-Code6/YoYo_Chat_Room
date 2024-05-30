@@ -1,10 +1,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Layout from "@/layout";
+import Login from "@/views/Login.vue";
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path:'/',
+    name:'Login',
+    component: Login
+  },
   {
     path: '/',//根目录路由为/
     component: Layout,//指定使用Layout组件布局
