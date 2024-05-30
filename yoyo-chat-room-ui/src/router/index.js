@@ -14,6 +14,16 @@ const routes = [
       name: 'home',
       component: () => import('../views/HomeView.vue')//指定组件
     }]
+  },
+  {
+    path: '/login',//根目录路由为/
+    name: 'login',
+    component: () => import('../views/LoginView.vue')//指定组件
+  },
+  {
+    path: '/register',//根目录路由为/
+    name: 'register',
+    component: () => import('../views/RegisterView.vue')//指定组件
   }
 ]
 
