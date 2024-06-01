@@ -30,8 +30,8 @@ public interface InformationMapper {
     /**
      * 根据用户ID选择信息列表。
      *
-     * @param userId 用户的唯一标识符。
+     * @param sendId,receiveId 用户的唯一标识符。
      * @return 返回一个包含该用户相关联信息的列表。如果用户没有信息，则返回空列表。
      */
-    List<Information> selectInformationByUserId(Integer userId);
+    List<Information> selectInformationBySendIdReceiveId(Integer sendId, Integer receiveId);
 }

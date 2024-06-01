@@ -42,11 +42,11 @@ public class InformationService {
     /**
      * 根据用户ID选择信息列表。
      *
-     * @param userId 用户的唯一标识符。
+     * @param sendId,receiveId 用户的唯一标识符。
      * @return 返回一个信息列表，这些信息与给定的用户ID相关联。
      */
-    public List<Information> selectInformationByUserId(Integer userId) {
+    public List<Information> selectInformationBySendIdReceiveId(Integer sendId, Integer receiveId) {
         // 通过用户ID从数据库中查询相关信息
-        return informationMapper.selectInformationByUserId(userId);
+        return informationMapper.selectInformationBySendIdReceiveId(sendId, receiveId);
     }
 }

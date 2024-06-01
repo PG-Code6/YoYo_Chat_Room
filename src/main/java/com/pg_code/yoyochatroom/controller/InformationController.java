@@ -23,42 +23,46 @@ public class InformationController {
 
     /**
      * 插入信息到数据库
+     *
      * @param information 要插入的信息对象
      * @return 返回操作结果，成功则返回Result.success()，失败则返回Result.error()
      */
     @PutMapping("/insertInformation")
     private Result insertInformation(@RequestBody Information information) {
         // 调用informationService的插入方法，根据返回的受影响行数判断操作成功与否
-        return informationService.insertInformation(information)>0?Result.success():Result.error();
+        return informationService.insertInformation(information) > 0 ? Result.success() : Result.error();
     }
 
     /**
      * 根据ID删除信息
+     *
      * @param infId 要删除的信息的ID
      * @return 返回操作结果，成功则返回Result.success()，失败则返回Result.error()
      */
     @DeleteMapping("/deleteInformation")
     private Result deleteInformation(@RequestParam Integer infId) {
         // 调用informationService的删除方法，根据返回的受影响行数判断操作成功与否
-        return informationService.deleteInformation(infId)>0?Result.success():Result.error();
+        return informationService.deleteInformation(infId) > 0 ? Result.success() : Result.error();
     }
 
-     /**
+    /**
      * 通过用户ID查询用户信息。
      *
-     * @param userId 用户的ID，用于查询特定用户的信息。
+     * @param sendId,receiveId 用户的ID，用于查询特定用户的信息。
      * @return 返回查询结果，封装在Result对象中。若查询成功，Result对象中将包含用户信息；若查询失败，Result对象中将包含错误信息。
      */
-@GetMapping("/selectInformation")
-public Result selectInformation(@RequestParam Integer userId) {
-    // 根据传入的userId查询用户信息，然后将信息封装在informationList数组中返回
+    @GetMapping("/selectInformation")
+    public Result selectInformation(@RequestParam Integer sendId, @RequestParam Integer receiveId) {
+        // 根据传入的userId查询用户信息，然后将信息封装在informationList数组中返回
 
 
-    List<Information> informationList = informationService.selectInformationByUserId(userId);
+        List<Information> informationList = informationService.selectInformationBySendIdReceiveId(sendId, receiveId);
 
-    // 根据查询结果判断操作是否成功，这里直接返回成功，因为查询操作本身不涉及修改数据库影响行数的概念
-    // 实际上，你应该检查informationList是否为空或有数据来决定返回的成功或错误信息
-    return informationList != null && !informationList.isEmpty() ? Result.success(informationList) : Result.error("未找到相关信息");
-}
+        // 根据查询结果判断操作是否成功，这里直接返回成功，因为查询操作本身不涉及修改数据库影响行数的概念
+        // 实际上，你应该检查informationList是否为空或有数据来决定返回的成功或错误信息
+        //return informationList != null && !informationList.isEmpty() ? Result.success(informationList) : Result.error("未找到相关信息");
+
+        return Result.success(informationList);
+    }
 
 }

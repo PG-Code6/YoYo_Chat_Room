@@ -24,13 +24,13 @@ const routes = [
   {
     path: '/login',//根目录路由为/
     name: 'login',
-    component: () => import('../views/LoginView.vue')//指定组件
-  },
-  {
-    path: '/register',//根目录路由为/
-    name: 'register',
-    component: () => import('../views/RegisterView.vue')//指定组件
+    component: () => import('../views/Login.vue')//指定组件
   }
+  // {
+  //   path: '/register',//根目录路由为/
+  //   name: 'register',
+  //   component: () => import('../views/RegisterView.vue')//指定组件
+  // }
 ]
 
 const router = new VueRouter({

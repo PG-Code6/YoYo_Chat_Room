@@ -6,27 +6,40 @@
 
     <resultMap id="InfoMap" type="com.pg_code.yoyochatroom.domain.entity.Information">
         <id property="infId" column="inf_send_id"/>
-        <result property="infSendId" column="inf_send_id" />
-        <result property="infReceiveId" column="inf_receive_id" />
-        <result property="infContent" column="inf_content" />
-        <result property="infTime" column="inf_time" />
+        <result property="infSendId" column="inf_send_id"/>
+        <result property="infReceiveId" column="inf_receive_id"/>
+        <result property="infContent" column="inf_content"/>
+        <result property="infTime" column="inf_time"/>
     </resultMap>
 
     <!-- 添加信息 -->
     <insert id="insertInformation">
-        INSERT INTO information ( inf_send_id, inf_receive_id, inf_content, inf_time) VALUES (#{infSendId},#{infReceiveId}, #{infContent},#{infTime})
+        INSERT INTO information (inf_send_id, inf_receive_id, inf_content, inf_time)
+        VALUES (#{infSendId}, #{infReceiveId}, #{infContent}, #{infTime})
     </insert>
 
     <!-- 删除指定信息 -->
     <!-- 参数说明：infId-要删除的信息ID -->
     <delete id="deleteInformation">
-        DELETE FROM information WHERE inf_id = #{infId}
+        DELETE
+        FROM information
+        WHERE inf_id = #{infId}
     </delete>
 
     <!-- 根据用户ID查询信息 -->
-    <select id="selectInformationByUserId" resultMap="InfoMap">
-    SELECT * FROM information
-    WHERE inf_send_id = #{userId} OR inf_receive_id = #{userId}
+    <!--<select id="selectInformationByUserId" resultMap="InfoMap">-->
+    <!--SELECT * FROM information-->
+    <!--WHERE inf_send_id = #{userId} OR inf_receive_id = #{userId}-->
+    <!--</select>-->
+
+    <!--// 根据发送者ID和接收者ID查询信息-->
+    <select id="selectInformationBySendIdReceiveId"
+            resultMap="InfoMap">
+        SELECT *
+        FROM information
+        WHERE (inf_send_id = #{sendId}
+          AND inf_receive_id = #{receiveId}) OR (inf_send_id = #{receiveId}
+          AND inf_receive_id = #{sendId})
     </select>
 
 

@@ -1,5 +1,6 @@
 package com.pg_code.yoyochatroom.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -20,7 +21,7 @@ public class Information {
 
     private String infContent; // 消息内容，最大长度4000字符
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private LocalDateTime infTime; // 消息时间
-
 
 }
