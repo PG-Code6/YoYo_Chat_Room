@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pg_code.yoyochatroom.mapper.InformationMapper">
+
+    <resultMap id="InfoMap" type="com.pg_code.yoyochatroom.domain.entity.Information">
+        <id property="infId" column="inf_send_id"/>
+        <result property="infSendId" column="inf_send_id" />
+        <result property="infReceiveId" column="inf_receive_id" />
+        <result property="infContent" column="inf_content" />
+        <result property="infTime" column="inf_time" />
+    </resultMap>
+
+    <!-- 添加信息 -->
+    <insert id="insertInformation">
+        INSERT INTO information ( inf_send_id, inf_receive_id, inf_content, inf_time) VALUES (#{infSendId},#{infReceiveId}, #{infContent},#{infTime})
+    </insert>
+
+    <!-- 删除指定信息 -->
+    <!-- 参数说明：infId-要删除的信息ID -->
+    <delete id="deleteInformation">
+        DELETE FROM information WHERE inf_id = #{infId}
+    </delete>
+
+    <!-- 根据用户ID查询信息 -->
+    <select id="selectInformationByUserId" resultMap="InfoMap">
+    SELECT * FROM information
+    WHERE inf_send_id = #{userId} OR inf_receive_id = #{userId}
+    </select>
+
+
+</mapper>
