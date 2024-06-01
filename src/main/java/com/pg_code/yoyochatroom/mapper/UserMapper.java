@@ -1,6 +1,7 @@
 package com.pg_code.yoyochatroom.mapper;
 
 import com.pg_code.yoyochatroom.domain.entity.User;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public interface UserMapper {
      * @param user
      * @return
      */
+
     int insertUser(User user);
 
     /**
