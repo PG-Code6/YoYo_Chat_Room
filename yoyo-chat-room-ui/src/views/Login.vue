@@ -17,7 +17,7 @@
             <h1>login</h1>
             <input type="text" placeholder="用户名">
             <input type="password" placeholder="密码">
-            <button>登录</button>
+            <button @click="userLogin">登录</button>
           </div>
         </div>
 
@@ -59,6 +59,9 @@ export default {
     toggleForm() {
       this.isLogin = !this.isLogin;
     },
+    userLogin(){
+      this.$router.push('/')
+    }
   },
 };
 </script>

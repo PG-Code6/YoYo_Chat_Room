@@ -1,0 +1,160 @@
+.name_right {
+    /*border: 1vh red solid;*/
+    margin-left: 70vw;
+}
+
+.name_left {
+    /*border: 1vh green solid;*/
+    margin-left: 1vw;
+}
+
+.content_right {
+    word-wrap: break-word;
+    width: 25vw;
+    margin-left: 80vh;
+    font-size: 2vh;
+    text-align: left;
+    margin-bottom: 2vh;
+    background-color: #fff;
+    border-radius: 6px !important;
+    padding: 1vh;
+}
+
+.content_left {
+    word-wrap: break-word;
+    width:  30vw;
+    margin-left: 6vh;
+    font-size: 2vh;
+    text-align: left;
+    margin-bottom: 2vh;
+    background-color:  #fff;
+    border-radius: 6px !important;
+    padding: 1vh;
+}
+
+.url_right {
+    margin-left: 1vh;
+
+}
+
+.url-left {
+    margin-left: 1vh;
+
+}
+
+::-webkit-scrollbar {
+    height: 10px !important;
+    width: 10px !important;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 0;
+    border-style: dashed;
+    background-color: #DCE1E6;
+    border-color: #e2242400;
+    border-width: 1px;
+    background-clip: padding-box;
+}
+
+
+
+::-webkit-scrollbar-track { /*滚动条里面轨道*/
+    -webkit-box-shadow: inset 0 0 10vh rgba(0, 0, 0, 0.2);
+    border-radius: 1vh;
+    background: white;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(157, 165, 183, 0.7);
+}
+
+
+.word-break {
+    word-break: break-all;
+}
+
+
+.infinite-list-wrapper p {
+    text-align: center;
+}
+
+
+.show-input-content {
+    height: 100%;
+    width: 100%;
+    border: 1px solid black;
+
+}
+
+.emotion {
+    width: 3vh !important;
+    height: 3vh !important;
+    margin-right: 1vh;
+    line-height: 1vh;
+    top: 1vh;
+    /*border: 10px red solid;*/
+}
+
+
+.icon {
+    width: 2em;
+    height: 2em;
+    vertical-align: -0.15em;
+    /*fill: currentColor;*/
+    overflow: hidden;
+    background-color: #fff;
+    /*border: 10px red solid;*/
+}
+
+.talk {
+    /*border: 1vh red solid;*/
+    width: 77vw;
+    height: 85vh;
+    margin: 0 auto;
+    /*padding-top: 10vh;*/
+}
+
+/*.talk-header {*/
+/*    width: 100%;*/
+/*    height: 30px;*/
+/*    z-index: 1;*/
+/*    border-bottom: 1px solid #1480ec;*/
+/*}*/
+
+/*.talk-header-icon {*/
+/*    padding-left: 330px;*/
+/*    border-bottom: 1px solid red;*/
+/*}*/
+
+.talk-content {
+    overflow-y: auto;
+    height: 82vh;
+    /*border: 2px solid green;*/
+}
+
+.talk-message {
+    height: 4vh;
+    display: flex;
+}
+
+.talk-message-face {
+    width: 8vw;
+    padding-left: 1vh;
+    padding-top: 1vh;
+    /*border: 2px solid red;*/
+}
+
+.talk-message-content {
+    padding-top: 1vh;
+    width: 95vw;
+    /*border: 2px solid red;*/
+}
+
+.talk-message-send {
+    padding-top: 2vh;
+    width: 9vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*border: 2px solid red;*/
+}
