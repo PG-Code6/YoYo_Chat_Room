@@ -113,23 +113,16 @@ A simple chat room
 
 Mr.Chen	
 
+Ms.Du
+
 Mr.Zhang	
 
  Ms.Lu
 
  Ms.Huang
 
- Ms.Chen
 
 
 
 
-
-## \## 许可证  
-
-  
-
-本项目采用[MIT许可证](LICENSE)。  
-
-  
 
