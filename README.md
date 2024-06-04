@@ -113,7 +113,7 @@ A simple chat room
 
 Mr.Chen	
 
-Mr.Du
+Ms.Du
 
 Mr.Zhang	
 
