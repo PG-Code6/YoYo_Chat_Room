@@ -17,7 +17,12 @@ public class Information {
 
     private Integer infSendId; // 发送者ID
 
+    private String  infSendName;//发送者名称
+
     private Integer infReceiveId; // 接收者ID，默认0
+
+    private String  infReceiveName;//  接收者名称
+
 
     private String infContent; // 消息内容，最大长度4000字符
 

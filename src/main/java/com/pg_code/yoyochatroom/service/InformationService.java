@@ -2,6 +2,7 @@ package com.pg_code.yoyochatroom.service;
 
 import com.pg_code.yoyochatroom.common.Result;
 import com.pg_code.yoyochatroom.domain.entity.Information;
+import com.pg_code.yoyochatroom.domain.entity.User;
 import com.pg_code.yoyochatroom.mapper.InformationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,8 @@ import java.util.List;
 public class InformationService {
     @Autowired // 自动注入InformationMapper
     private InformationMapper informationMapper;
-
+    @Autowired
+    private UserService userService;
     /**
      * 插入一条信息数据
      * @param information 要插入的信息对象
@@ -45,8 +47,23 @@ public class InformationService {
      * @param sendId,receiveId 用户的唯一标识符。
      * @return 返回一个信息列表，这些信息与给定的用户ID相关联。
      */
-    public List<Information> selectInformationBySendIdReceiveId(Integer sendId, Integer receiveId) {
-        // 通过用户ID从数据库中查询相关信息
-        return informationMapper.selectInformationBySendIdReceiveId(sendId, receiveId);
+   public List<Information> selectInformationBySendIdReceiveId(Integer sendId, Integer receiveId) {
+    // 获取发送者用户信息
+    User senderUser = userService.selectUser(sendId);
+    // 获取接收者用户信息
+    User receiverUser = userService.selectUser(receiveId);
+
+    // 查询信息列表
+    List<Information> informationList = informationMapper.selectInformationBySendIdReceiveId(sendId, receiveId);
+
+    // 遍历信息列表，为每个Information对象设置发送者和接收者名称
+    for (Information info : informationList) {
+        info.setInfSendName(senderUser.getUserName()); // 假设User类中有getUsername()方法
+        info.setInfReceiveName(receiverUser.getUserName());
     }
+
+    return informationList;
+}
+
+
 }
