@@ -34,6 +34,15 @@ export default {
 
 <!--样式-->
 <style scoped>
+
+.el-aside::-webkit-scrollbar {
+	display: none;
+}
+
+.el-aside{
+	overflow: hidden;
+}
+
 .asideOne_Style{
   /*background-color: #000;*/
   height: 100vh;

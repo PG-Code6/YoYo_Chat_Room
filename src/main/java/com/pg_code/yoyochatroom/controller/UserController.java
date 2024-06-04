@@ -61,6 +61,7 @@ public class UserController {
      */
     @PutMapping("/insertUser")
     private Result insertUser(@RequestBody User user) {
+        System.out.println("user = " + user);
         return userService.insertUser(user) > 0 ? Result.success() : Result.error();
     }
 

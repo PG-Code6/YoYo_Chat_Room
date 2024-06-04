@@ -104,7 +104,6 @@ export default {
           }
         }).then((res)=>{
           if(res.data.data!==null){
-
             this.$message.error("用户名已存在");
           }
           else   request.put('/user/insertUser',this.user).then((res)=>{

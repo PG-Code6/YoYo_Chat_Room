@@ -30,7 +30,7 @@
           <div style="padding-top: 50vh">
             <img src="../assets/男人像-1.png" class="set_image">
             <footer style="color: #9a9999">彭刚</footer>
-            <footer style="color: #9a9999">hhhhhhhh</footer>
+            <footer style="color: #9a9999">放弃很简单，但坚持一定很酷！</footer>
             <el-button icon="el-icon-mic" circle></el-button>
             <el-button icon="el-icon-service" circle></el-button>
           </div>
@@ -39,7 +39,7 @@
 
 
 
-      
+
       <el-container>
 
 <!--        <el-header>-->
@@ -86,6 +86,10 @@ export default {
 </script>
 
 <style scoped>
+
+.el-main{
+	overflow: hidden;
+}
 
 .container_style{
   /*border: 2px red solid;*/
@@ -159,13 +163,17 @@ export default {
   /*!*padding: 0 !important;*!*/
   /*!*margin: 0 !important;*!*/
   width: 15vw;
+	margin-bottom: 10px;
 }
 .el-menu-item{
   /*border: 2px red solid;*/
   border-radius: 20px;
-}  .el-menu-item:hover{
-  background-color: #fff;
+	width: 80% !important;
 }
+
+/*.el-menu-item:hover{*/
+/*  background-color: #fff;*/
+/*}*/
 
 /*.el-button_style{*/
 /*  height: 40px;*/

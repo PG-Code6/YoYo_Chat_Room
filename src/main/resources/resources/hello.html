@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<script>
+    var ws = new WebSocket("ws://localhost:20000/imserver/zs");
+
+    ws.onopen = function() {
+        console.log("连接成功");
+        ws.send("你好");
+    }
+</script>
+</body>
+</html>

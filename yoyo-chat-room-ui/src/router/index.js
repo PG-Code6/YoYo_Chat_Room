@@ -10,16 +10,6 @@ const routes = [
         name: 'login',
         component: () => import('../views/Login.vue')//指定组件
     },
-    // {
-    //     path: '/loginview',//根目录路由为/
-    //     name: 'loginview',
-    //     component: () => import('../views/LoginView.vue')//指定组件
-    // },
-    // {
-    //     path: '/register',//根目录路由为/
-    //     name: 'register',
-    //     component: () => import('../views/RegisterView.vue')//指定组件
-    // },
     {
         path: '/goodfriend',//根目录路由为/
         redirect: '/goodfriend',
