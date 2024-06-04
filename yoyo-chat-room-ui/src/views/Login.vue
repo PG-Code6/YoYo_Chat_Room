@@ -4,20 +4,19 @@
       <div class="container">
         <div class="form-box" :class="{ 'slide-right': isLogin }">
           <!-- 注册 -->
-          <div class="register-box" v-if="isLogin">
+          <div class="register-box" v-if="isLogin" >
             <h1>register</h1>
-            <input type="text" placeholder="用户名">
-            <input type="email" placeholder="邮箱">
-            <input type="password" placeholder="密码">
-            <input type="password" placeholder="确认密码">
-            <button>注册</button>
+              <input type="text"  v-model="user.userName" placeholder="用户名">
+              <input type="password" v-model="user.userPassword" placeholder="密码" >
+              <input type="password" v-model="user.userPassword2" placeholder="确认密码" >
+              <button @click="register">注册</button>
           </div>
           <!-- 登录 -->
           <div class="login-box"  v-if="!isLogin">
             <h1>login</h1>
-            <input type="text" placeholder="用户名">
-            <input type="password" placeholder="密码">
-            <button @click="userLogin">登录</button>
+            <input type="text" placeholder="用户名" v-model="user.userName">
+            <input type="password" placeholder="密码" v-model="user.userPassword">
+            <button id="login" @click="login" >登录</button>
           </div>
         </div>
 
@@ -27,7 +26,7 @@
           <p>快来开启你的专属<span>聊天旅程</span>吧</p>
           <img src="../assets/cat/1.png" alt="">
           <p>已有账号</p>
-          <button id="login" @click="toggleForm">去登录</button>
+          <button id="go_login" @click="toggleForm">去登录</button>
         </div>
 
 
@@ -49,19 +48,80 @@
 
 
 <script>
+import router from "@/router";
+import axios from "axios";
+import request from "@/utils/request";
+
+
+
 export default {
+  computed: {
+    rules() {
+      return rules
+    }
+  },
   data() {
     return {
       isLogin: true, // 控制显示登录还是注册表单的标志
+      user: {
+        userName: '',
+        userPassword: '',
+        userPassword2: '',
+        userId:''
+      },
     };
   },
   methods: {
+
     toggleForm() {
       this.isLogin = !this.isLogin;
     },
-    userLogin(){
-      this.$router.push('/')
-    }
+   login(){
+      if(this.user.userName==='')  this.$message.success('请输入用户名');
+      else if(this.user.userPassword==='') this.$message.success('请输入密码');
+      else request.post('/login',this.user).then((res)=>{
+        if(res.data.code==="200"){
+          this.$message.success('登录成功');
+
+          router.push('/community');
+        }else{
+          this.$message.success('登录失败:'+res.data.msg);
+
+        }
+      })
+
+    },
+    register(){
+
+      if(this.user.userName==='') this.$message.success("用户名不能为空");
+      else if(this.user.userPassword==='') this.$message.success("密码不能为空");
+      else if(this.user.userPassword2==='') this.$message.success("确认密码不能为空");
+      else if(this.user.userPassword!==this.user.userPassword2)this.$message.success("密码不一致");
+      else if(this.user.userPassword===this.user.userPassword2) {
+        request.get('/user/selectUserByName', {
+          params: {
+            userName: this.user.userName
+          }
+        }).then((res)=>{
+          if(res.data.data!==null){
+
+            this.$message.success("用户名已存在");
+          }
+          else   request.put('/user/insertUser',this.user).then((res)=>{
+            if(res.data.code==="200"){
+              this.$message.success("注册成功，快去登录吧");
+              this.isLogin=!this.isLogin;
+            }else{
+              this.$message.success("注册失败");
+            }
+          })
+        })
+
+      }
+
+    },
+
+
   },
 };
 </script>

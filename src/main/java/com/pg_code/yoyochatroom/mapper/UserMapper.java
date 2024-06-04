@@ -49,4 +49,8 @@ public interface UserMapper {
      * @return
      */
     List<User> selectAllUser();
+
+    List<User> selectByMo(Integer userId, String userName);
+
+    User selectUserByName(String userName);
 }

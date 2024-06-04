@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 
 const routes = [
     {
-        path: '/login',//根目录路由为/
+        path: '/',//根目录路由为/
         name: 'login',
         component: () => import('../views/Login.vue')//指定组件
     },
@@ -21,7 +21,7 @@ const routes = [
     //     component: () => import('../views/RegisterView.vue')//指定组件
     // },
     {
-        path: '/',//根目录路由为/
+        path: '/goodfriend',//根目录路由为/
         redirect: '/goodfriend',
         component: Layout,//指定使用Layout组件布局
         children: [

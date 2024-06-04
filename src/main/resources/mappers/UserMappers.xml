@@ -34,5 +34,13 @@
     <select id="selectAllUser" resultMap="UserMap">
         select * from user;
     </select>
+    <!--多条件全模糊-->
+    <select id="selectByMo" resultMap="UserMap">
+        select * from user where user_id like concat('%',#{userId},'%') and user_name like concat('%',#{userName},'%');
+    </select>
+
+    <select id="selectUserByName"  resultMap="UserMap">
+        select * from user where user_name = #{userName};
+    </select>
 
 </mapper>

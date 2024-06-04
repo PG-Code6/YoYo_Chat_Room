@@ -1,6 +1,8 @@
 package com.pg_code.yoyochatroom.service;
 
+
 import com.pg_code.yoyochatroom.domain.entity.User;
+import com.pg_code.yoyochatroom.exception.ServiceException;
 import com.pg_code.yoyochatroom.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,4 +63,25 @@ public class UserService {
    public int deleteUser(Integer userId) {
        return userMapper.deleteUser(userId);
    }
+
+    public List<User>  selectByMo(Integer userId, String userName) {
+       return userMapper.selectByMo(userId,userName);
+
+    }
+
+    public User selectUserByName(String userName) {
+       return userMapper.selectUserByName(userName);
+    }
+
+    public User login(User user) {
+       User dbUser = userMapper.selectUserByName(user.getUserName());
+       if(dbUser==null){
+           //抛出一个自定义的异常
+           throw new ServiceException("用户名不存在");
+       }
+       if(!user.getUserPassword().equals(dbUser.getUserPassword())){
+           throw new ServiceException("用户名或密码错误");
+       }
+       return dbUser;
+    }
 }
