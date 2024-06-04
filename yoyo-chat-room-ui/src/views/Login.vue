@@ -77,15 +77,15 @@ export default {
       this.isLogin = !this.isLogin;
     },
    login(){
-      if(this.user.userName==='')  this.$message.success('请输入用户名');
-      else if(this.user.userPassword==='') this.$message.success('请输入密码');
+      if(this.user.userName==='')  this.$message.error('请输入用户名');
+      else if(this.user.userPassword==='') this.$message.error('请输入密码');
       else request.post('/login',this.user).then((res)=>{
         if(res.data.code==="200"){
           this.$message.success('登录成功');
 
           router.push('/community');
         }else{
-          this.$message.success('登录失败:'+res.data.msg);
+          this.$message.error('登录失败:'+res.data.msg);
 
         }
       })
@@ -93,10 +93,10 @@ export default {
     },
     register(){
 
-      if(this.user.userName==='') this.$message.success("用户名不能为空");
-      else if(this.user.userPassword==='') this.$message.success("密码不能为空");
-      else if(this.user.userPassword2==='') this.$message.success("确认密码不能为空");
-      else if(this.user.userPassword!==this.user.userPassword2)this.$message.success("密码不一致");
+      if(this.user.userName==='') this.$message.error("用户名不能为空");
+      else if(this.user.userPassword==='') this.$message.error("密码不能为空");
+      else if(this.user.userPassword2==='') this.$message.error("确认密码不能为空");
+      else if(this.user.userPassword!==this.user.userPassword2)this.$message.error("密码不一致");
       else if(this.user.userPassword===this.user.userPassword2) {
         request.get('/user/selectUserByName', {
           params: {
@@ -105,14 +105,14 @@ export default {
         }).then((res)=>{
           if(res.data.data!==null){
 
-            this.$message.success("用户名已存在");
+            this.$message.error("用户名已存在");
           }
           else   request.put('/user/insertUser',this.user).then((res)=>{
             if(res.data.code==="200"){
               this.$message.success("注册成功，快去登录吧");
               this.isLogin=!this.isLogin;
             }else{
-              this.$message.success("注册失败");
+              this.$message.error("注册失败");
             }
           })
         })
