@@ -82,7 +82,9 @@ export default {
       else request.post('/login',this.user).then((res)=>{
         if(res.data.code==="200"){
           this.$message.success('登录成功');
-
+          let user ={};
+          user.username=this.user.userName;
+          localStorage.setItem('user',JSON.stringify(user));
           router.push('/community');
         }else{
           this.$message.error('登录失败:'+res.data.msg);

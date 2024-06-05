@@ -14,7 +14,7 @@ create table information(
                             inf_send_id int not null comment '发送者id',
                             inf_receive_id int not null default 0 comment '接收者id(0,表示社区；1表示机器人，用户id大于等于10)',
                             inf_content varchar(1000) not null comment '消息内容',
-                            inf_time datetime not null comment '消息时间'
+                            inf_time datetime  comment '消息时间'
 )comment '消息表';
 
 insert into information(inf_send_id,inf_receive_id,inf_content,inf_time) values(1,2,'你好',now());

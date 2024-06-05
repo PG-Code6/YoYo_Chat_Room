@@ -6,6 +6,7 @@ import com.pg_code.yoyochatroom.domain.entity.User;
 import com.pg_code.yoyochatroom.mapper.InformationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -26,6 +27,9 @@ public class InformationService {
      * @return 返回插入操作影响的行数
      */
     public int insertInformation(Information information) {
+        information.setInfSendId(userService.selectUserByName(information.getInfSendName()).getUserId());
+        information.setInfReceiveId(userService.selectUserByName(information.getInfReceiveName()).getUserId());
+        System.out.println(information);
         return informationMapper.insertInformation(information);
     }
 
@@ -44,26 +48,28 @@ public class InformationService {
     /**
      * 根据用户ID选择信息列表。
      *
-     * @param sendId,receiveId 用户的唯一标识符。
      * @return 返回一个信息列表，这些信息与给定的用户ID相关联。
      */
-   public List<Information> selectInformationBySendIdReceiveId(Integer sendId, Integer receiveId) {
+   public List<Information> selectInformationBySendIdReceiveId(String infSendName, String infReceiveName) {
+       Integer infSendId = userService.selectUserByName(infSendName).getUserId();
+       Integer infReceiveId = userService.selectUserByName(infReceiveName).getUserId();
     // 获取发送者用户信息
-    User senderUser = userService.selectUser(sendId);
-    // 获取接收者用户信息
-    User receiverUser = userService.selectUser(receiveId);
+       User senderUser = userService.selectUser(infSendId);
+        // 获取接收者用户信息
+       User receiverUser = userService.selectUser(infReceiveId);
 
-    // 查询信息列表
-    List<Information> informationList = informationMapper.selectInformationBySendIdReceiveId(sendId, receiveId);
 
-    // 遍历信息列表，为每个Information对象设置发送者和接收者名称
-    for (Information info : informationList) {
-        info.setInfSendName(senderUser.getUserName()); // 假设User类中有getUsername()方法
-        info.setInfReceiveName(receiverUser.getUserName());
+        // 查询信息列表
+        List<Information> informationList = informationMapper.selectInformationBySendIdReceiveId(infSendId, infReceiveId);
+
+        // 遍历信息列表，为每个Information对象设置发送者和接收者名称
+        for (Information info : informationList) {
+           info.setInfSendName(userService.selectUser(info.getInfSendId()).getUserName());
+           info.setInfReceiveName(userService.selectUser(info.getInfReceiveId()).getUserName());
+        }
+
+        return informationList;
     }
-
-    return informationList;
-}
 
 
 }

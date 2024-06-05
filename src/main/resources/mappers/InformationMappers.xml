@@ -5,7 +5,7 @@
 <mapper namespace="com.pg_code.yoyochatroom.mapper.InformationMapper">
 
     <resultMap id="InfoMap" type="com.pg_code.yoyochatroom.domain.entity.Information">
-        <id property="infId" column="inf_send_id"/>
+        <id property="infId" column="inf_id"/>
         <result property="infSendId" column="inf_send_id"/>
         <result property="infReceiveId" column="inf_receive_id"/>
         <result property="infContent" column="inf_content"/>
@@ -37,9 +37,9 @@
             resultMap="InfoMap">
         SELECT *
         FROM information
-        WHERE (inf_send_id = #{sendId}
-          AND inf_receive_id = #{receiveId}) OR (inf_send_id = #{receiveId}
-          AND inf_receive_id = #{sendId})
+        WHERE (inf_send_id = #{infSendId}
+          AND inf_receive_id = #{infReceiveId}) OR (inf_send_id = #{infReceiveId}
+          AND inf_receive_id = #{infSendId})
     </select>
 
 

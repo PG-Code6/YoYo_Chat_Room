@@ -62,8 +62,7 @@
       </div>
 
 
-      <div class=" talk-message
-                ">
+      <div class=" talk-message">
 
         <div class="talk-message-face">
           <svg class="icon" aria-hidden="true" @click="isShow">
@@ -99,6 +98,7 @@
 import emotion from "../layout/components/emotion.vue";
 import "../assets/talk.css";
 import '../utils/iconfont';
+import axios from "axios";
 let socket;
 export default {
 
@@ -147,6 +147,29 @@ export default {
     console.log(this.friend);
   },
   mounted() {
+    axios.get("http://localhost:9091/information/selectInformation", {
+  params: {
+    infSendName: this.user.username,
+    infReceiveName: this.chatUser
+  }
+}).then(res => {
+  console.log(res.data.data);
+
+  for (let i = 0; i < res.data.data.length; i++) {
+
+    console.log(res.data.data);
+    let user = res.data.data[i];
+    console.log(user.infSendName+':'+this.user.username);
+    if(user.infSendName !== this.user.username) {
+      this.createContent(1, null, res.data.data[i].infContent);
+
+    } else{
+      this.createContent(null, 1, res.data.data[i].infContent);
+
+    }
+  }
+});
+
     this.scrollToBottom()
   },
   updated() {
@@ -255,10 +278,16 @@ export default {
 					console.log("您的浏览器不支持WebSocket");
 				} else {
 					console.log("您的浏览器支持WebSocket");
+
 					// 组装待发送的消息 json
 					// {"from": "zhang", "to": "admin", "text": "聊天文本"}
 					let message = {from: this.user.username, to: this.chatUser, text: this.text}
 					socket.send(JSON.stringify(message));  // 将组装好的json发送给服务端，由服务端进行转发
+
+          let information = {infSendName: this.user.username, infContent: this.text,infReceiveName: this.chatUser}
+          axios.put('http://localhost:9091/information/insertInformation', information).then(res => {
+            console.log(res)
+          })
 					this.messages.push({user: this.user.username, text: this.text})
 					// 构建消息内容，本人消息
 					this.createContent(null, this.user.username, this.text)
@@ -349,7 +378,8 @@ export default {
       this.$emit('close',this.fleg)
     }
 
-  }
+  },
+
 
 }
 </script>
