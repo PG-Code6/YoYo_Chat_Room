@@ -161,10 +161,10 @@ export default {
     let user = res.data.data[i];
     console.log(user.infSendName+':'+this.user.username);
     if(user.infSendName !== this.user.username) {
-      this.createContent(1, null, res.data.data[i].infContent);
+      this.createContent("&nbsp", null, res.data.data[i].infContent,user.infTime);
 
     } else{
-      this.createContent(null, 1, res.data.data[i].infContent);
+      this.createContent(null, 1, res.data.data[i].infContent,user.infTime);
 
     }
   }
@@ -207,7 +207,8 @@ export default {
 						if (data.from === _this.chatUser && data.to !== 'all') {
 							_this.messages.push(data)
 							// 构建消息内容
-							_this.createContent(data.from, null, data.text)
+              let time = _this.getCurrentFormattedTime();
+							_this.createContent(data.from, null, data.text,time)
 						}
 					}
 				};
@@ -222,12 +223,28 @@ export default {
 				}
 			}
 		},
-		createContent(remoteUser, nowUser, text) {  // 这个方法是用来将 json的聊天消息数据转换成 html的。
+    getCurrentFormattedTime() {
+      let now = new Date();
+
+      function padZero(num) {
+        return num < 10 ? '0' + num : num;
+      }
+
+      let year = now.getFullYear();
+      let month = padZero(now.getMonth() + 1);
+      let day = padZero(now.getDate());
+      let hours = padZero(now.getHours());
+      let minutes = padZero(now.getMinutes());
+      let seconds = padZero(now.getSeconds());
+      return year + "-" + month + "-" + day + " " + hours + ":" + minutes+ ":"+seconds;
+    },
+		createContent(remoteUser, nowUser, text,time) {  // 这个方法是用来将 json的聊天消息数据转换成 html的。
 			let html
 			// 当前用户消息
 			if (nowUser) { // nowUser 表示是否显示当前用户发送的聊天消息，绿色气泡
 				html = "<div class=\"el-row\" style=\"padding: 5px 0;display: flex;align-items: center;\">\n" +
 						"  <div class=\"el-col el-col-22\" style=\"text-align: right; padding-right: 10px\">\n" +
+            "    <div style=\"font-size: 9px;color: gray;margin-left: 400px\">" + time + "</div>\n" +
 						"    <div class=\"tip left\" style=\"color: white;\n" +
 						"\ttext-align: center;\n" +
 						"\tborder-radius: 10px;\n" +
@@ -245,24 +262,26 @@ export default {
 						"  </div>\n" +
 						"</div>";
 			} else if (remoteUser) {   // remoteUser表示远程用户聊天消息，蓝色的气泡
-				html = "<div class=\"el-row\" style=\"padding: 5px 0;display: flex;align-items: center;\">\n" +
-						"  <div class=\"el-col el-col-2\" style=\"text-align: right\">\n" +
-						"  <span class=\"el-avatar el-avatar--circle\" style=\"height: 40px; width: 40px;\">\n" +
-						"    <img src=\"https://img.pg-code-go.com\" style=\"object-fit: cover;\">\n" +
-						"  </span>\n" +
-						"  </div>\n" +
-						"  <div class=\"el-col el-col-22\" style=\"text-align: left; padding-left: 10px\">\n" +
-						"    <div style=\"color: white !important;\n" +
-						"\ttext-align: center !important;\n" +
-						"\tborder-radius: 10px !important;\n" +
-						"\tfont-family: sans-serif !important;\n" +
-						"\tpadding: 10px !important;\n" +
-						"\twidth:auto !important;\n" +
-						"\tdisplay:inline-block !important;\n" +
-						"\tdisplay:inline;background-color: deepskyblue;\">" + text + "</div>\n" +
-						"  </div>\n" +
-						"</div>";
-			}
+        html = "<div class=\"el-row\" style=\"padding: 5px 0;display: flex;align-items: center;\">\n" +
+            "  <div class=\"el-col el-col-2\" style=\"text-align: right\">\n" +
+            "  <span class=\"el-avatar el-avatar--circle\" style=\"height: 40px; width: 40px;\">\n" +
+            "    <img src=\"https://img.pg-code-go.com\" style=\"object-fit: cover;\">\n" +
+            "  </span>\n" +
+            "  </div>\n" +
+            "  <div class=\"el-col el-col-22\" style=\"text-align: left; padding-left: 10px\">\n" +
+            "    <div style=\"font-size: 10px;font-weight: bold;\">" + remoteUser + "&nbsp&nbsp<span style=\"font-size: 9px;color: gray;\">" + time + "</span></div>\n" +
+
+            "    <div style=\"color: white !important;\n" +
+            "\ttext-align: center !important;\n" +
+            "\tborder-radius: 10px !important;\n" +
+            "\tfont-family: sans-serif !important;\n" +
+            "\tpadding: 10px !important;\n" +
+            "\twidth:auto !important;\n" +
+            "\tdisplay:inline-block !important;\n" +
+            "\tdisplay:inline;background-color: deepskyblue;\">" + text + "</div>\n" +
+            "  </div>\n" +
+            "</div>";
+      }
 			console.log(html)
 			this.content += html;
 		},
@@ -283,14 +302,15 @@ export default {
 					// {"from": "zhang", "to": "admin", "text": "聊天文本"}
 					let message = {from: this.user.username, to: this.chatUser, text: this.text}
 					socket.send(JSON.stringify(message));  // 将组装好的json发送给服务端，由服务端进行转发
-
-          let information = {infSendName: this.user.username, infContent: this.text,infReceiveName: this.chatUser}
+          let time1 = this.getCurrentFormattedTime();
+          let information = {infSendName: this.user.username, infContent: this.text,infReceiveName: this.chatUser,infTime: time1}
           axios.put('http://localhost:9091/information/insertInformation', information).then(res => {
             console.log(res)
           })
 					this.messages.push({user: this.user.username, text: this.text})
 					// 构建消息内容，本人消息
-					this.createContent(null, this.user.username, this.text)
+          let time = this.getCurrentFormattedTime();
+					this.createContent(null, this.user.username, this.text,time)
 					this.text = '';
 				}
 			}
