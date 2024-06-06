@@ -13,7 +13,7 @@ import java.util.List;
  * @Date 2024/5/29 11:41
  * @Created by PG_Code
  */
-@CrossOrigin
+
 @RestController
 @RequestMapping("/user")
 public class UserController {

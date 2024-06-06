@@ -28,8 +28,15 @@
           </el-menu-item>
 
           <div style="padding-top: 50vh">
-            <img src="../assets/男人像-1.png" class="set_image">
-            <footer style="color: #9a9999">彭刚</footer>
+						<el-dropdown trigger="click" placement="top">
+							<span class="el-dropdown-link">
+									<el-avatar slot="reference" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+							</span>
+							<el-dropdown-menu slot="dropdown">
+								<el-dropdown-item @click.native="outLogin">退出登录</el-dropdown-item>
+							</el-dropdown-menu>
+						</el-dropdown>
+            <footer style="color: #9a9999">{{user.username}}</footer>
             <footer style="color: #9a9999">放弃很简单，但坚持一定很酷！</footer>
             <el-button icon="el-icon-mic" circle></el-button>
             <el-button icon="el-icon-service" circle></el-button>
@@ -70,16 +77,24 @@ export default {
       isCollapse: true,
       input1: '',
       input2: '',
-      size: ''
+      size: '',
+			user:{}
     };
   },
-  methods: {
+	created() {
+		this.user = JSON.parse(localStorage.getItem("user"));
+	},
+	methods: {
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
-    }
+    },
+		outLogin(){
+			localStorage.removeItem("user");
+			this.$router.push("/login");
+		}
   }
 }
 

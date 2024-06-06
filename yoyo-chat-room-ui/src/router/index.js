@@ -6,12 +6,12 @@ Vue.use(VueRouter)
 
 const routes = [
     {
-        path: '/',//根目录路由为/
+        path: '/login',//根目录路由为/
         name: 'login',
         component: () => import('../views/Login.vue')//指定组件
     },
     {
-        path: '/goodfriend',//根目录路由为/
+        path: '/',//根目录路由为/
         redirect: '/goodfriend',
         component: Layout,//指定使用Layout组件布局
         children: [
@@ -54,10 +54,24 @@ VueRouter.prototype.replace = function push(location) {
     return routerReplace.call(this, location).catch(err => err)
 }
 //
+
+
 const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
     routes
 })
+
+
+router.beforeEach((to, from, next) => {
+    let user = localStorage.getItem('user');
+    if(!user && (from.name !== 'login')){
+        if (to.name !== 'login' && !user) next({ name: 'login' })
+        else next()
+    }else {
+        next()
+    }
+})
+
 
 export default router
