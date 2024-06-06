@@ -41,6 +41,11 @@
           AND inf_receive_id = #{infReceiveId}) OR (inf_send_id = #{infReceiveId}
           AND inf_receive_id = #{infSendId})
     </select>
+    <select id="selectInformationByAdmin"  resultMap="InfoMap">
+        SELECT *
+        FROM information
+        WHERE inf_receive_id = 1
+    </select>
 
 
 </mapper>

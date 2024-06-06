@@ -143,12 +143,7 @@ export default {
 		this.init();
 	},
 	mounted() {
-    axios.get("http://localhost:9091/information/selectInformation", {
-      params: {
-        infSendName: this.user.username,
-        infReceiveName: this.chatUser
-      }
-    }).then(res => {
+    axios.get("http://localhost:9091/information/selectInformationByAdmin").then(res => {
       console.log(res.data.data);
 
       for (let i = 0; i < res.data.data.length; i++) {
@@ -156,16 +151,17 @@ export default {
         console.log(res.data.data);
         let user = res.data.data[i];
         console.log(user.infSendName+':'+this.user.username);
-        if(user.infSendName !== this.user.username) {
-          this.createContent(1, null, res.data.data[i].infContent);
+        if(user.infSendName === this.user.username) {
+          this.createContent(null, 1, res.data.data[i].infContent);
 
         } else{
-          this.createContent(null, 1, res.data.data[i].infContent);
+          this.createContent(1, null, res.data.data[i].infContent);
 
         }
       }
     });
-		this.scrollToBottom()
+
+    this.scrollToBottom()
 	},
 	updated() {
 		this.scrollToBottom()
@@ -270,14 +266,15 @@ export default {
 					console.log("您的浏览器不支持WebSocket");
 				} else {
 					console.log("您的浏览器支持WebSocket");
-          alert(this.user.userName);
-          alert(this.text);
-          alert(this.user.userName)
+
 					// 组装待发送的消息 json
 					// {"from": "zhang", "to": "admin", "text": "聊天文本"}
 					let message = {from: this.user.username, to: 'all', text: this.text}
 					socket.send(JSON.stringify(message));  // 将组装好的json发送给服务端，由服务端进行转发
-
+          let information = {infSendName: this.user.username, infContent: this.text,infReceiveName:"admin"}
+          axios.put('http://localhost:9091/information/insertInformation', information).then(res => {
+            console.log(res)
+          })
 					this.messages.push({user: this.user.username, text: this.text})
 					// 构建消息内容，本人消息
 					this.createContent(null, this.user.username, this.text)

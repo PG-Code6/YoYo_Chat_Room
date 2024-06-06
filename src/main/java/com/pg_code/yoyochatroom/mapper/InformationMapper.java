@@ -33,4 +33,6 @@ public interface InformationMapper {
      * @return 返回一个包含该用户相关联信息的列表。如果用户没有信息，则返回空列表。
      */
     List<Information> selectInformationBySendIdReceiveId(Integer infSendId, Integer infReceiveId);
+
+    List<Information> selectInformationByAdmin();
 }

@@ -72,4 +72,15 @@ public class InformationService {
     }
 
 
+
+
+    public List<Information> selectInformationByAdmin() {
+        List<Information> informationList = informationMapper.selectInformationByAdmin();
+
+        for (Information info : informationList) {
+            info.setInfSendName(userService.selectUser(info.getInfSendId()).getUserName());
+            info.setInfReceiveName("admin");
+        }
+        return informationList;
+    }
 }

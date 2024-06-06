@@ -65,4 +65,18 @@ public class InformationController {
         return Result.success(informationList);
     }
 
+    @GetMapping("/selectInformationByAdmin")
+    public Result selectInformationByAdmin() {
+        // 根据传入的userId查询用户信息，然后将信息封装在informationList数组中返回
+
+
+        List<Information> informationList = informationService.selectInformationByAdmin();
+
+        // 根据查询结果判断操作是否成功，这里直接返回成功，因为查询操作本身不涉及修改数据库影响行数的概念
+        // 实际上，你应该检查informationList是否为空或有数据来决定返回的成功或错误信息
+        //return informationList != null && !informationList.isEmpty() ? Result.success(informationList) : Result.error("未找到相关信息");
+        System.out.println("informationList:" + informationList);
+        return Result.success(informationList);
+    }
+
 }
